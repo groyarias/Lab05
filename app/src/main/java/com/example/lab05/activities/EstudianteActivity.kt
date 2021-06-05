@@ -2,21 +2,16 @@ package com.example.lab05.activities
 
 import android.app.AlertDialog
 import android.app.Dialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lab05.R
-import com.example.lab05.adaptadores.CursoAdaptador
 import com.example.lab05.adaptadores.EstudianteAdaptador
 import com.example.lab05.database.DatabaseHandler
-import com.example.lab05.logica.Curso
 import com.example.lab05.logica.Estudiante
-import kotlinx.android.synthetic.main.activity_curso.*
 import kotlinx.android.synthetic.main.activity_estudiante.*
-import kotlinx.android.synthetic.main.dialog_actualizar_curso.*
-import kotlinx.android.synthetic.main.dialog_actualizar_curso.dialogCreditos
 import kotlinx.android.synthetic.main.dialog_actualizar_estudiante.*
 
 class EstudianteActivity : AppCompatActivity() {
@@ -147,7 +142,6 @@ class EstudianteActivity : AppCompatActivity() {
 
         val handlerBaseDatos: DatabaseHandler = DatabaseHandler(this)
         val listaEstudiantes:ArrayList<Estudiante> = handlerBaseDatos.obtenerListaEstudiantes()
-
         return listaEstudiantes
     }
 
