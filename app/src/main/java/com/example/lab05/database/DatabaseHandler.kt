@@ -34,8 +34,6 @@ class DatabaseHandler(context: Context):
             //Atributos DetalleMatricula: fkEstudiante, fkCurso
             private const val FK_ESTUDIANTE = "fkEstudiante"
             private const val FK_CURSO = "fkCurso"
-
-
         }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -46,26 +44,26 @@ class DatabaseHandler(context: Context):
                 + EDAD + " INTEGER)")
 
         val CREAR_TABLA_CURSO = ("CREATE TABLE " + TABLE_CURSO + "("
-                + ID_CURSO + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + ID_CURSO + " TEXT PRIMARY KEY,"
                 + DESCRIPCION + " TEXT,"
                 + CREDITOS + " INTEGER)")
 
-        val CREAR_TABLA_DETALLE_MATRICULA = ("CREATE TABLE " + TABLE_DETALLE_MATRICULA + "("
+        /*val CREAR_TABLA_DETALLE_MATRICULA = ("CREATE TABLE " + TABLE_DETALLE_MATRICULA + "("
                 + FK_ESTUDIANTE + " TEXT,"
-                + FK_CURSO + " INTEGER,"
+                + FK_CURSO + " TEXT,"
                 +"FOREIGN KEY("+FK_ESTUDIANTE+") REFERENCES "+ TABLE_ESTUDIANTE +"("+ ID_ESTUDIANTE +"),"
                 +"FOREIGN KEY("+FK_CURSO+") REFERENCES "+ TABLE_CURSO +"("+ ID_CURSO +"))")
-
+        */
         db?.execSQL(CREAR_TABLA_ESTUDIANTE)
         db?.execSQL(CREAR_TABLA_CURSO)
-        db?.execSQL(CREAR_TABLA_DETALLE_MATRICULA)
+        //db?.execSQL(CREAR_TABLA_DETALLE_MATRICULA)
 
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_ESTUDIANTE")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_CURSO")
-        db?.execSQL("DROP TABLE IF EXISTS $TABLE_DETALLE_MATRICULA")
+        //db?.execSQL("DROP TABLE IF EXISTS $TABLE_DETALLE_MATRICULA")
         onCreate(db)
     }
 
@@ -118,7 +116,7 @@ class DatabaseHandler(context: Context):
         contentValues.put(APELLIDOS, estudiante.apellidos)
         contentValues.put(EDAD, estudiante.edad)
         //Actualizar fila
-        val esExitosa = db.update(TABLE_ESTUDIANTE, contentValues, ID_ESTUDIANTE + "=" + estudiante.id, null)
+        val esExitosa = db.update(TABLE_ESTUDIANTE, contentValues, ID_ESTUDIANTE + "= ?", arrayOf(estudiante.id))
         db.close()
         return esExitosa
     }
@@ -126,7 +124,7 @@ class DatabaseHandler(context: Context):
     fun eliminarEstudiante(estudiante: Estudiante):Int{
         val db = this.writableDatabase
         //Eliminar fila
-        val esExitosa = db.delete(TABLE_ESTUDIANTE, ID_ESTUDIANTE + "=" + estudiante.id, null)
+        val esExitosa = db.delete(TABLE_ESTUDIANTE, ID_ESTUDIANTE + "= ?", arrayOf(estudiante.id))
         db.close()
         return esExitosa
     }
@@ -135,6 +133,7 @@ class DatabaseHandler(context: Context):
         val db = this.writableDatabase
 
         val contentValues = ContentValues()
+        contentValues.put(ID_CURSO,curso.id)
         contentValues.put(DESCRIPCION,curso.descripcion)
         contentValues.put(CREDITOS,curso.creditos)
 
@@ -154,7 +153,7 @@ class DatabaseHandler(context: Context):
             if (cursor.moveToFirst()){
                 do {
                     val curso = Curso(
-                        cursor.getInt(cursor.getColumnIndex(ID_CURSO)),
+                        cursor.getString(cursor.getColumnIndex(ID_CURSO)),
                         cursor.getString(cursor.getColumnIndex(DESCRIPCION)),
                         cursor.getInt(cursor.getColumnIndex(CREDITOS))
                     )
@@ -176,7 +175,7 @@ class DatabaseHandler(context: Context):
         contentValues.put(DESCRIPCION, curso.descripcion)
         contentValues.put(CREDITOS, curso.creditos)
         //Actualizar fila
-        val esExitosa = db.update(TABLE_ESTUDIANTE, contentValues, ID_CURSO + "=" + curso.id, null)
+        val esExitosa = db.update(TABLE_CURSO, contentValues, ID_CURSO + "= ?", arrayOf(curso.id))
         db.close()
         return esExitosa
     }
@@ -184,7 +183,7 @@ class DatabaseHandler(context: Context):
     fun eliminarCurso(curso: Curso):Int{
         val db = this.writableDatabase
         //Eliminar fila
-        val esExitosa = db.delete(TABLE_CURSO, ID_CURSO + "=" + curso.id, null)
+        val esExitosa = db.delete(TABLE_CURSO, ID_CURSO + "= ?", arrayOf(curso.id))
         db.close()
         return esExitosa
     }
