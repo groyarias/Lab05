@@ -14,15 +14,15 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         handleLogin()
-        handleRegistro(savedInstanceState)
+        handleRegistro()
+        handleCambioContrasenia()
 
     }
 
-    private fun handleRegistro(savedInstanceState: Bundle?) {
+    private fun handleRegistro() {
         tv_registrar.setOnClickListener {
             var intent:Intent = Intent(this, RegistroActivity::class.java)
             startActivity(intent)
-            finish()
 
         }
     }
@@ -31,7 +31,6 @@ class LoginActivity : AppCompatActivity() {
         tv_cambiar.setOnClickListener {
             var intent:Intent = Intent(this, ContraseniaActivity::class.java)
             startActivity(intent)
-            finish()
 
         }
     }
@@ -59,13 +58,4 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    companion object{
-        var ACTIVIDAD_REGISTRO_USUARIO:Int = 1
-    }
-
 }

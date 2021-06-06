@@ -1,5 +1,8 @@
 package com.example.lab05.activities
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -79,8 +82,36 @@ class NavDrawerActivity : AppCompatActivity() {
             }
         }
 
+        navView.menu.findItem(R.id.nav_logout).setCheckable(true)
+        navView.menu.findItem(R.id.nav_logout).setOnMenuItemClickListener { item ->
+            when(item.itemId){
+                R.id.nav_logout -> {
+                    logout(this)
+                    true
+                }
+                else -> false
+            }
+        }
 
+    }
 
+    fun logout(activity: Activity) {
+        var builder = AlertDialog.Builder(activity)
+        builder.setTitle("Cerrar Sesión")
+        builder.setMessage("Está seguro que desea cerrar sesión?")
+
+        builder.setPositiveButton("Aceptar", DialogInterface.OnClickListener { dialog, which ->
+
+            var intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
+            activity.finishAffinity()
+        })
+
+        builder.setNegativeButton("Cancelar", DialogInterface.OnClickListener { dialog, which ->
+            dialog.dismiss()
+        })
+
+        builder.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -23,5 +23,10 @@
             android:id="@+id/nav_matricula"
             android:icon="@drawable/ic_matricula"
             android:title="@string/menu_matricula" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/menu_logout" />
     </group>
 </menu>
