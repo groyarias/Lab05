@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.database.sqlite.SQLiteException
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,9 @@ class MatriculaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_matricula)
+
+        supportActionBar!!.setTitle("Matricula")
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         handleConsultaEstudiante()
         handleConsultaCurso()
@@ -42,16 +46,18 @@ class MatriculaActivity : AppCompatActivity() {
                         var estudiante: Estudiante? = databaseHandler.consultarEstudiante(idEstudiante)
                         if(estudiante != null){
                             dialogConsultaEstudiante(estudiante)
+                        }else{
+                            mostrarDialog("Consulta base de datos","No se ha encontrado un estudiante con este identificador")
                         }
                     }
                     catch (e:SQLiteException){
-                        mostrarDialog("Consulta base de datos","No se han encontrado registros")
+                        mostrarDialog("Consulta base de datos","Error en base de datos")
                     }
                 }else{
                     Toast.makeText(this, "Ingrese la identificación del estudiante", Toast.LENGTH_SHORT).show()
                 }
             }catch (e:Exception){
-                mostrarDialog("Consulta estudiante","No se ha encontrado el estudiante")
+                mostrarDialog("Consulta estudiante","Problemas al realizar la consulta")
             }
         }
     }
@@ -161,6 +167,16 @@ class MatriculaActivity : AppCompatActivity() {
         builder.setTitle(title)
         builder.setMessage(Message)
         builder.show()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home ->{
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

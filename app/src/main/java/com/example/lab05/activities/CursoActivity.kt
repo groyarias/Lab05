@@ -3,6 +3,7 @@ package com.example.lab05.activities
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -19,6 +20,9 @@ class CursoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_curso)
+
+        supportActionBar!!.setTitle("Gestión cursos")
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         btnAgregarCurso.setOnClickListener {
             agregarCurso()
@@ -140,5 +144,15 @@ class CursoActivity : AppCompatActivity() {
         val alertDialog:AlertDialog = builder.create()
         alertDialog.setCancelable(false)
         alertDialog.show()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home ->{
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -12,19 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab05">
-        <activity android:name=".activities.MatriculaActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CursoActivity">
-
-        </activity>
-        <activity android:name=".activities.EstudianteActivity">
-
-        </activity>
+        <activity android:name=".activities.ContraseniaActivity"/>
+        <activity android:name=".activities.RegistroActivity" />
+        <activity
+            android:name=".activities.NavDrawerActivity"
+            android:label="@string/title_activity_nav_drawer"
+            android:theme="@style/Theme.Lab05.NoActionBar"/>
+        <activity android:name=".activities.MatriculaActivity" />
+        <activity android:name=".activities.CursoActivity" />
+        <activity android:name=".activities.EstudianteActivity" />
     </application>
 
 </manifest>

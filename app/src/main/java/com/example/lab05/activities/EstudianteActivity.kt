@@ -3,6 +3,7 @@ package com.example.lab05.activities
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,9 @@ class EstudianteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_estudiante)
+
+        supportActionBar!!.setTitle("Gestión estudiantes")
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         btnRegistrarEstudiante.setOnClickListener{
             agegarEstudiante()
@@ -143,6 +147,16 @@ class EstudianteActivity : AppCompatActivity() {
         val handlerBaseDatos: DatabaseHandler = DatabaseHandler(this)
         val listaEstudiantes:ArrayList<Estudiante> = handlerBaseDatos.obtenerListaEstudiantes()
         return listaEstudiantes
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home ->{
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
